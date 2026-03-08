@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Your Next Favorite Novel | Ebook Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #5C4E42;
+            --secondary-color: #D4A574;
+            --accent-color: #F5EFE7;
+            --text-dark: #3E3B38;
+            --text-light: #8B8680;
+            --border-light: #E5DDD2;
+            --success: #7CB968;
+            --spacing-unit: 1rem;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #FEFBF7;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(254, 251, 247, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 1rem 2rem;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #FEFBF7 0%, #FAF8F4 100%);
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-subtitle {
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            max-width: 900px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.2);
+        }
+
+        .cta-button:hover {
+            background-color: #C89560;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 165, 116, 0.3);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .hero-trust {
+            margin-top: 3rem;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .hero-trust strong {
+            color: var(--text-dark);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 4rem 2rem;
+            background-color: #FEFBF7;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 6vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-card:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            transform: translateY(-8px);
+            border-color: var(--secondary-color);
+        }
+
+        .product-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: capitalize;
+        }
+
+        .popular-badge {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        .product-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .product-card:nth-child(2) .product-cover {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .product-card:nth-child(3) .product-cover {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .product-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .product-features {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .product-features li {
+            list-style: none;
+            padding: 0.4rem 0;
+            color: var(--text-light);
+        }
+
+        .product-features li:before {
+            content: '✓ ';
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 1.5rem 0;
+        }
+
+        .product-price-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-card button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .product-card:hover button {
+            background-color: var(--secondary-color);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 4rem 2rem;
+            background-color: var(--accent-color);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefit-item {
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .benefit-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 4rem 2rem;
+            background-color: #FEFBF7;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background-color: var(--accent-color);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-style: italic;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #4A3D34 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button-light {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .cta-button-light:hover {
+            background-color: #C89560;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav > div {
+                gap: 1rem !important;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem;
+                min-height: 60vh;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .products {
+                padding: 3rem 1.5rem;
+            }
+
+            .product-grid {
+                gap: 1.5rem;
+            }
+
+            .benefits,
+            .testimonials {
+                padding: 3rem 1.5rem;
+            }
+
+            #about {
+                padding: 3rem 1.5rem !important;
+            }
+
+            #about > div > div[style*="grid-template-columns: 1fr 1fr"] {
+                grid-template-columns: 1fr !important;
+            }
+
+            .cta-section {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .product-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .product-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .product-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">📚 NovelHub</div>
+        <div style="display: flex; gap: 2rem;">
+            <a href="#products">Our Books</a>
+            <a href="#about">About Us</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-subtitle">Discover Amazing Stories</div>
+        <h1>Your Next Favorite Novel Awaits</h1>
+        <p>Immerse yourself in captivating stories that transport you to new worlds. High-quality ebooks at unbeatable prices.</p>
+        <a href="#products" class="cta-button">Browse Our Collection</a>
+        <div class="hero-trust">✓ <strong>500+</strong> Happy Readers | <strong>4.9★</strong> Average Rating | <strong>Digital Delivery</strong> Instant Access</div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <h2 class="section-title">Our Ebook Collection</h2>
+        <p class="section-subtitle">Choose your next adventure</p>
+
+        <div class="product-grid">
+            <!-- Ebook A -->
+            <div class="product-card">
+                <span class="product-badge">Starter Pack</span>
+                <div class="product-cover">📖</div>
+                <h3 class="product-title">Ebook A</h3>
+                <p class="product-description">Perfect for beginners. A compelling story that hooks you from page one.</p>
+                <ul class="product-features">
+                    <li>200+ Pages</li>
+                    <li>Digital Format</li>
+                    <li>Instant Access</li>
+                </ul>
+                <div class="product-price-label">Starting at</div>
+                <div class="product-price">RM5</div>
+                <button class="purchase-btn" onclick="purchaseBook('Ebook A', 5)">Get It Now</button>
+            </div>
+
+            <!-- Ebook B -->
+            <div class="product-card">
+                <span class="product-badge popular-badge">Most Popular ⭐</span>
+                <div class="product-cover">✨</div>
+                <h3 class="product-title">Ebook B</h3>
+                <p class="product-description">Our bestseller! A captivating narrative that readers can't put down.</p>
+                <ul class="product-features">
+                    <li>350+ Pages</li>
+                    <li>Bonus Content</li>
+                    <li>Lifetime Access</li>
+                </ul>
+                <div class="product-price-label">Best Value</div>
+                <div class="product-price">RM8</div>
+                <button class="purchase-btn" onclick="purchaseBook('Ebook B', 8)">Get It Now</button>
+            </div>
+
+            <!-- Ebook C -->
+            <div class="product-card">
+                <span class="product-badge">Premium</span>
+                <div class="product-cover">👑</div>
+                <h3 class="product-title">Ebook C</h3>
+                <p class="product-description">The complete experience. Our most comprehensive novel with exclusive materials.</p>
+                <ul class="product-features">
+                    <li>500+ Pages</li>
+                    <li>Author Interview</li>
+                    <li>Reading Guide</li>
+                </ul>
+                <div class="product-price-label">Premium Edition</div>
+                <div class="product-price">RM10</div>
+                <button class="purchase-btn" onclick="purchaseBook('Ebook C', 10)">Get It Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <h2 class="section-title">Why Readers Love Us</h2>
+        <p class="section-subtitle">More than just books</p>
+
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-icon">⚡</div>
+                <h3>Instant Access</h3>
+                <p>Download and start reading immediately after purchase. No waiting, no hassle.</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🔒</div>
+                <h3>DRM-Free</h3>
+                <p>Your books are yours. Read on any device, anytime, anywhere without restrictions.</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">💰</div>
+                <h3>Best Prices</h3>
+                <p>Affordable ebooks that deliver premium quality. Great value for every reader.</p>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🎁</div>
+                <h3>Exclusive Perks</h3>
+                <p>Special bonuses and exclusive content for our valued customers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2 class="section-title">What Readers Say</h2>
+        <p class="section-subtitle">Real reviews from real readers</p>
+
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Absolutely captivating! I finished it in two days. Worth every ringgit!"</p>
+                <p class="testimonial-author">Sarah M.</p>
+                <p class="testimonial-role">Verified Reader</p>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"The best ebook I've read this year. The story is gripping and the characters are unforgettable."</p>
+                <p class="testimonial-author">James T.</p>
+                <p class="testimonial-role">Verified Reader</p>
+            </div>
+            <div class="testimonial">
+                <div class="stars">★★★★★</div>
+                <p class="testimonial-text">"Instant delivery and great quality. This platform makes it easy to find amazing stories."</p>
+                <p class="testimonial-author">Emma L.</p>
+                <p class="testimonial-role">Verified Reader</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" style="padding: 4rem 2rem; background-color: #FAF8F4;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">Our Story</h2>
+            <p class="section-subtitle">How NovelHub was born</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem;">
+                <div>
+                    <div style="background: linear-gradient(135deg, #D4A574 0%, #C89560 100%); 
+                        height: 300px; border-radius: 12px; display: flex; align-items: center; 
+                        justify-content: center; color: white; font-size: 4rem;">
+                        📖
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #5C4E42;">
+                        From Passion to Platform
+                    </h3>
+                    
+                    <p style="color: #8B8680; line-height: 1.8; margin-bottom: 1rem;">
+                        NovelHub was born from a simple frustration. In 2022, our founder—a passionate reader and indie author—struggled to find a platform that truly understood novel lovers. Existing marketplaces were cluttered, confusing, and didn't celebrate the stories that deserved celebration.
+                    </p>
+                    
+                    <p style="color: #8B8680; line-height: 1.8; margin-bottom: 1rem;">
+                        So we built NovelHub from the ground up with one mission: <strong style="color: #5C4E42;">Make it easy for amazing authors to reach eager readers.</strong> No distractions. No complexity. Just great stories at fair prices.
+                    </p>
+                    
+                    <p style="color: #8B8680; line-height: 1.8; margin-bottom: 1rem;">
+                        Today, NovelHub has become home to thousands of dedicated readers and hundreds of talented authors. We've proudly facilitated over <strong style="color: #5C4E42;">50,000+ book sales</strong>, and our community continues to grow every day.
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                        <div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #D4A574;">50K+</div>
+                            <div style="color: #8B8680;">Books Sold</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #D4A574;">5K+</div>
+                            <div style="color: #8B8680;">Happy Authors</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #D4A574;">100K+</div>
+                            <div style="color: #8B8680;">Active Readers</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #D4A574;">4.9★</div>
+                            <div style="color: #8B8680;">Average Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Values Section -->
+            <div style="margin-top: 4rem; padding-top: 3rem; border-top: 2px solid #E5DDD2;">
+                <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 3rem; color: #5C4E42;">
+                    What We Believe In
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid #D4A574;">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #5C4E42;">
+                            📖 Reader First
+                        </h4>
+                        <p style="color: #8B8680;">Every decision we make prioritizes your reading experience. You deserve quality stories at fair prices.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid #D4A574;">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #5C4E42;">
+                            ✍️ Author Empowerment
+                        </h4>
+                        <p style="color: #8B8680;">We give indie authors a fair platform without gatekeeping. Your stories matter and deserve an audience.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid #D4A574;">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #5C4E42;">
+                            🌟 Quality Over Quantity
+                        </h4>
+                        <p style="color: #8B8680;">We curate and celebrate the best stories. You'll find hidden gems, not generic content.</p>
+                    </div>
+                    
+                    <div style="background: white; padding: 2rem; border-radius: 12px; border-left: 4px solid #D4A574;">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #5C4E42;">
+                            🤝 Community Driven
+                        </h4>
+                        <p style="color: #8B8680;">Our readers and authors shape our platform. Your feedback drives innovation and improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Start Your Adventure?</h2>
+        <p>Join hundreds of happy readers who've discovered their new favorite novels. Choose your book and start reading today!</p>
+        <a href="#products" class="cta-button-light">Browse All Books</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 NovelHub. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        <p style="margin-top: 1rem; opacity: 0.8;">Made with ❤️ for book lovers</p>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Purchase button handler (can be connected to payment gateway)
+        function purchaseBook(bookName, price) {
+            // This would typically integrate with a payment processor
+            alert(`Thank you for interest in ${bookName}!\n\nPrice: RM${price}\n\nThis is where you'd integrate your payment gateway (Stripe, PayPal, 2Checkout, etc.)`);
+            // Later: window.location.href = '/checkout?book=' + encodeURIComponent(bookName) + '&price=' + price;
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card, .testimonial, .benefit-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Track conversion-related analytics (when users click purchase)
+        document.querySelectorAll('.purchase-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Log analytics event
+                console.log('Purchase button clicked: ' + this.textContent);
+                // In production, you'd send this to Google Analytics or similar
+            });
+        });
+    </script>
+</body>
+</html>
